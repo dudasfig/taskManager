@@ -1,45 +1,43 @@
 import json
 
 class Usuario:
-    _id_counter = 1  # Contador para IDs únicos
+    idCounter = 1 
 
     def __init__(self, nome: str, email: str):
-        self.id = Usuario._id_counter
+        self.id = Usuario.idCounter
         self.nome = nome
         self.email = email
-        Usuario._id_counter += 1
+        Usuario.idCounter += 1
 
     def __repr__(self):
         return f"Usuario(ID={self.id}, Nome={self.nome}, Email={self.email})"
 
 
 class Tarefa:
-    _id_counter = 1  # Contador para IDs únicos
+    idCounter = 1  
 
     def __init__(self, titulo: str, descricao: str, status: str, usuario: Usuario):
         if status not in ["Pendente", "Em Andamento", "Concluído"]:
             raise ValueError("Status inválido. Use: 'Pendente', 'Em Andamento' ou 'Concluído'.")
         
-        self.id = Tarefa._id_counter
+        self.id = Tarefa.idCounter
         self.titulo = titulo
         self.descricao = descricao
         self.status = status
-        self.usuario = usuario  # Referência ao usuário
-        Tarefa._id_counter += 1
+        self.usuario = usuario  
+        Tarefa.idCounter += 1
 
     def __repr__(self):
         return f"Tarefa(ID={self.id}, Título={self.titulo}, Status={self.status}, Usuário={self.usuario.nome})"
 
 
 class GerenciadorTarefas:
-    """Classe que gerencia usuários e tarefas"""
-    
+   
     def __init__(self):
-        self.usuarios = []  # Lista de usuários
-        self.tarefas = []  # Lista de tarefas
+        self.usuarios = []  
+        self.tarefas = []  
 
     def cadastrar_usuario(self):
-        """Solicita dados ao usuário e cadastra um novo usuário"""
         nome = input("Digite o nome do usuário: ")
         email = input("Digite o e-mail do usuário: ")
         usuario = Usuario(nome, email)
@@ -47,7 +45,6 @@ class GerenciadorTarefas:
         print(f"\n✅ Usuário cadastrado com sucesso: {usuario}\n")
 
     def listar_usuarios(self):
-        """Lista todos os usuários cadastrados"""
         if not self.usuarios:
             print("\n⚠️ Nenhum usuário cadastrado.\n")
         else:
@@ -57,14 +54,12 @@ class GerenciadorTarefas:
             print()
 
     def obter_usuario_por_id(self, usuario_id: int):
-        """Retorna um usuário pelo ID"""
         for usuario in self.usuarios:
             if usuario.id == usuario_id:
                 return usuario
         return None
 
     def criar_tarefa(self):
-        """Solicita dados ao usuário e cria uma nova tarefa"""
         if not self.usuarios:
             print("\n⚠️ Nenhum usuário cadastrado! Cadastre um usuário primeiro.\n")
             return
@@ -97,7 +92,6 @@ class GerenciadorTarefas:
         print(f"\n✅ Tarefa criada com sucesso: {tarefa}\n")
 
     def listar_tarefas(self):
-        """Lista todas as tarefas cadastradas"""
         if not self.tarefas:
             print("\n⚠️ Nenhuma tarefa cadastrada.\n")
         else:
@@ -107,7 +101,6 @@ class GerenciadorTarefas:
             print()
 
     def exportar_para_json(self):
-        """Exporta as tarefas para um arquivo JSON"""
         if not self.tarefas:
             print("\n⚠️ Nenhuma tarefa cadastrada para exportar.\n")
             return
@@ -132,8 +125,6 @@ class GerenciadorTarefas:
 
         print("\n✅ Dados exportados para 'tasks.json' com sucesso!\n")
 
-
-# ===================== MENU INTERATIVO ===================== #
 def menu():
     sistema = GerenciadorTarefas()
     
@@ -164,7 +155,5 @@ def menu():
         else:
             print("\n⚠️ Opção inválida! Tente novamente.\n")
 
-
-# ===================== EXECUÇÃO ===================== #
 if __name__ == "__main__":
     menu()
